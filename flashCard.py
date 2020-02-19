@@ -5,6 +5,8 @@ import random as rand
 # TODO make cards use images, os.command('imshow X')
 #		when creating card, just give it image filepath
 
+# TODO pretty print the card in a box with status displayed
+
 class card:
     def __init__(self,f='',b='',s='l'):
         self.front = f
@@ -122,7 +124,7 @@ class deckHandler:
 
     def quit(self):
         self.deckfp.close()
-                
+
     def deckLoop(self):
         usrInput = ''
         printDeckMenu(self.deckName)
@@ -150,7 +152,7 @@ class deckHandler:
                         elif cardFromDeck.status == 'r':
                             cardFromDeck.status = 'm'
                             self.mastered.add(cardFromDeck)
-                    if usrInput == 'n':
+                    else:
                         # recycle into learning deck
                         self.learning.add(cardFromDeck)
             elif usrInput[0] == 'a':
@@ -168,7 +170,7 @@ class deckHandler:
         # return random card for now,
         # need pq or something for picking cards out nicely
         # TODO picks from learning only rn
-        self.learning.draw()
+        return self.learning.draw()
 
 ###############§ Main
 def mainLoop(deckNames):
