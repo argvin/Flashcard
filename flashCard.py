@@ -27,7 +27,7 @@ class deck:
 	def __init__(self):
 		self.cards = []
 		self.title = ''
-		self.status = '' # learning , reviewing , mastered 
+		self.status = '' # learning , reviewing , mastered (l r m)
 	def shuffle(self):
 		rand.shuffle(self.cards)
 	def draw(self):
@@ -51,7 +51,7 @@ def copyFile(fname):
 
 def printMainMenu():
 	print('-------------------------------------------------------------------')
-	print('load or create new deck:  d <deck name>') 
+	print('load or create new deck:  l <deck name>') 
 	print('quit: q')
 	print('-------------------------------------------------------------------')
 
@@ -100,13 +100,15 @@ class deckHandler:
 				card.front = line
 				card.back = self.deckfp.readline() # when making new cards, strip newlines to make all on one line
 				card.status = self.deckfp.readline()
+                # populate appropriate deck
 				if card.status == 'l':
 					self.learning.add(card)
 				elif card.status == 'r':
 					self.reviewing.add(card)
 				else:
 					self.mastered.add(card)
-
+    # write all the cards to the file 
+    # learning -> reviewing -> mastered
 	def write(self):
 		for card in self.learning:
 			self.deckfp.write(card.toStr())
@@ -162,7 +164,8 @@ class deckHandler:
 
 	def selectCard(self):
 		# return random card for now,
-		# need pq or something for determining if in learning, rev, mastered
+		# need pq or something for picking cards out nicely
+        # TODO picks from learning only rn
 		self.learning.draw()
 
 ###############§ Main
@@ -173,7 +176,7 @@ def mainLoop(deckNames):
 	while usrInput != 'q': 
 		usrInput = input('§ ')
 		action = usrInput[0]
-		if action == 'd': # load deck or new deck
+		if action == 'l': # load deck or new deck
 			deckName = usrInput[2:]
 			deckName = deckName.lower()
 			dealer.openDeck(deckName) # add these params (deckNames,deckNames) when you want to check for preexisting deck 
