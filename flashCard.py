@@ -16,8 +16,16 @@ class card:
         # hash for random access?
     def show(self):
         print(self.front)
+    # will need a different flip for images, or type checking
     def flip(self):
+        dash = '-'
+        lid = ''
+        for i in range(len(self.front)+4):
+            lid += dash
+        print(lid)
+        print('| ', self.front, ' |')
         print(self.back)
+
     def toStr(self):
         s = ''
         s += self.front + '\n'
@@ -66,6 +74,13 @@ def printDeckMenu(deckName):
     print('quit to main menu: q')
     #print('\t note: promotes card status until card mastered') # should appear in help menu
     print('-------------------------------------------------------------------')
+
+def printCardMenu():
+    print('--------------------')
+    print('m - master')
+    print('n - next')
+    print('--------------------')
+
 
 ###############§ Application
 class deckHandler:
@@ -141,8 +156,7 @@ class deckHandler:
                 usrInput = input('§ ')	
                 if usrInput == 'n':
                     cardFromDeck.flip()
-                    print('m - master')
-                    print('n - next')
+                    printCardMenu()
                     usrInput = input('§ ')	
                     if usrInput == 'm':
                         # TODO add counts to cardFromDecks to decide whether or not to upgrade to better deck
